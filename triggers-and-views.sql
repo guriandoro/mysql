@@ -1,9 +1,3 @@
-# make_sandbox --add_prefix=views_ /opt/mysql/5.7.18 -- --sandbox_port=13123
-
-
--- CREATE SCHEMA view_test;
--- USE view_test;
-
 DROP TABLE main_table;
 
 CREATE TABLE `main_table` (
@@ -59,19 +53,18 @@ SELECT * FROM table_trigger_control ORDER BY id;
 
 DROP VIEW view_main_table;
 
-CREATE ALGORITHM = TEMPTABLE VIEW view_main_table AS SELECT * FROM main_table;
+CREATE VIEW view_main_table AS SELECT * FROM main_table;
 
 SELECT * FROM view_main_table;
 
 SELECT sleep(5);
 
-INSERT INTO main_table VALUES (4, 'D', 40, time(NOW()));
+INSERT INTO view_main_table VALUES (4, 'D', 40, time(NOW()));
 
-UPDATE main_table SET letters = 'VIEW_MOD' WHERE id = 5;
+UPDATE view_main_table SET letters = 'VIEW_MOD' WHERE id = 5;
 
-DELETE FROM main_table WHERE id = 6;
+DELETE FROM view_main_table WHERE id = 6;
 
 SELECT * FROM main_table;
 SELECT * FROM table_trigger_control ORDER BY id;
 SELECT * FROM view_main_table;
-
